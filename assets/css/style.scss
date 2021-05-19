@@ -2,6 +2,9 @@
 ---
 
 @import "";
+
+$myMaxWidth: 1000px;
+
 body {
-  max-width: 1000px;
+  max-width: $myMaxWidth;
 }
