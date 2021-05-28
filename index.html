@@ -8,23 +8,35 @@
       var respecConfig = {
         // Working Groups ids at https://respec.org/w3c/groups/
         // group: "ICAO IMP Working Group A",
-  
+
         specStatus: "base",
         editors: [{
-          name: "Your Name",
-          url: "http://your-site.com",
+          name: "Renato Iannella",
+          url:        "https://au.linkedin.com/in/riannella",
+          company:    "Airservices Australia",
+          companyURL: "http://airservicesaustralia.com/",
         }],
         github: {
           branch: "main",
-          repoURL: "user/my-awesome-api",
+          repoURL: "https://github.com/airservicesaustralia/dcat-profile",
         },
-        license: "w3c-software-doc",
-        logos: [ {
+        //license: "w3c-software-doc",
+         logos: [ {
              src: "https://upload.wikimedia.org/wikipedia/en/thumb/6/62/International_Civil_Aviation_Organization_logo.svg/400px-International_Civil_Aviation_Organization_logo.svg.png",
              url: "https://icao.int",
              alt: "ICAO",
-             width: 150,
-              },],
+             width: 100,
+              },
+        ],
+        localBiblio: {
+                  "AIMV4": {
+                      title: "AIM Manual Volume 4 - Digital Datasets",
+                      publisher: "ICAO",
+                      status: "Draft",
+                      date: "2021",
+                      href: "TBA"
+                  }
+              },
       };
     </script>
   </head>
@@ -33,31 +45,767 @@
     <h1 id="title">W3C DCAT Profile for ICAO Aeronautical Datasets</h1>
     <section id='abstract'>
       <p>
-        This is required.
+        This specification defines a Profile of the W3C Data Catalog Vocabulary
+         specifically for the use of describing Aeronautical datasets in the Aviation industry.
       </p>
     </section>
     <section id="sotd" class="override">
     <h2>Status of this document</h2>
-    <p>Exploring new ideas...</p>
-  </section>
-    <section data-dfn-for="Foo">
-      <h2>Start your spec!</h2>
+    <p>The current version is DRAFT. Feedback and comments welcome via the Github Issue feature. </p>
+    <p>This specification is a technical appendium to the ICAO Aeronautical Information Management (AIM)
+      Manual Volume IV on Digital Data Sets.</p>
+      <p>This specification is governed by the ICAO Information Management Panel AIM Working Group.</p>
+
+    <p class="note">
+      This is a DRAFT Profile. Consensus is sought from the Aviation community on the set of properties specified in this Profile for relevance to business scenarios. Additional feedback is requested where definitions are created and/or interpreted by this Profile.
+    </p>
+
+   </section>
+
+    <section id='conformance' class="override">
+      <h2>Conformance</h2>
+      <p>As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this Profile are non-normative.
+        Everything else in this Profile is normative.</p>
+
+      <p>The key words MAY, MUST, MUST NOT, RECOMMENDED, SHOULD, and SHOULD NOT are to be interpreted as described in [[!RFC2119]].
 
       <section>
-        <h2><dfn>bar</dfn> attribute</h2>
-        <p>When getting, the  attribute returns you a 🍹.</p>
+              <h3>Normative namespaces</h3>
+              <p>Namespaces and prefixes used in normative parts of this Profile are shown in the following table.</p>
+
+              <table id="table-namespaces" class="simple">
+                  <thead>
+                      <tr>
+                          <th>Prefix</th>
+                          <th>Namespace IRI</th>
+                          <th>Source</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>
+                              <code>dcat</code>
+                          </td>
+                          <td>
+                              <code>http://www.w3.org/ns/dcat#</code>
+                          </td>
+                          <td>[[VOCAB-DCAT-3]]</td>
+                      </tr>
+                      <tr>
+                          <td>
+                              <code>dct</code>
+                          </td>
+                          <td>
+                              <code>http://purl.org/dc/terms/</code>
+                          </td>
+                          <td>[[DCTERMS]]</td>
+                      </tr>
+                      <tr>
+                          <td>
+                              <code>odrl</code>
+                          </td>
+                          <td>
+                              <code>http://www.w3.org/ns/odrl/2/</code>
+                          </td>
+                          <td>[[ODRL-VOCAB]]</td>
+                      </tr>
+                    
+                     <tr>
+                          <td>
+                              <code>sdo</code>
+                          </td>
+                          <td>
+                              <code>https://schema.org</code>
+                          </td>
+                          <td>[[SCHEMA-ORG]]</td>
+                      </tr>
+                      <tr>
+                          <td>
+                              <code>vcard</code>
+                          </td>
+                          <td>
+                              <code>http://www.w3.org/2006/vcard/ns#</code>
+                          </td>
+                          <td>[[VCARD-RDF]]</td>
+                      </tr>
+
+                  </tbody>
+              </table>
+
+          </section>
+
+<section class="informative">
+  <h2>Syntax Serialisation</h2>
+  <p>  This Profile does not prescribe any particular method of deploying and encoding data catalogs expressed in DCAT.
+    Within this Profile, the examples use [[JSON-LD]] because of its wide adoption.</p>
+</section>
+<section>
+  <h2>URI Identifiers for Values</h2>
+  <p> The DCAT specification, like most contemporary W3C recommendations, uses URIs as the value for many properties.
+  This is consistent with Semantic Web and Linked Data principles.</p>
+  <div class="advisement">
+  <p>This approach is new for the Aviation industry and as a tactical measure, this Profile will define a set of recommended URI values for relevant properties. </p>
+  <p>This Profile reserves the following URI domain for this purpose:
+    <code>http://vocab.icao.aero</code></p>
+  <p>The URIs based on this address will not be resolvable until a future time.
+    </p>
+  </div>
+</section>
+
+    </section>
+
+        </section>
+
+    <section>
+      <h2>Profile Model</h2>
+  <p>The ICAO Aeronautical Information Management (AIM)
+    Manual Volume IV on Digital Data Sets [[AIMV4]] defines the requirements for publishing digital data sets. This Profile defines how to implement these requirements as a Profile of the W3C DCAT specification [[VOCAB-DCAT-3]]
+    The Aeronautical Dataset Profile model is shown in Figure 1.
+    These classes, properties and relationships are considered to be the minimal standard and MUST be processable by conforming systems.
+    Other classes, properties and relationships from [[!VOCAB-DCAT-3]] MAY be used but some consuming systems MAY not process the data fully.
+  </p>
+
+
+    <figure id="ProfileModel">
+              <img alt="Information model for the Profile" src="./images/profile.jpg">
+              <figcaption>
+                        Overview of DCAT Profile, showing the relevant classes, properties and relationships.
+                    </figcaption>
+          </figure>
+<p>
+The Profile consists of the following six Classes:
+<UL>
+    <li> Data Catalog (<code>dcat:Catalog</code>) - The collection of Aeronautical Dataset Series </li>
+    <li> Dataset Series (<code>dcat:DatasetSeries</code>) - A collection of related Aeronautical datasets </li>
+    <li> Data Product Specification (<code>dcat:Resource</code>) - A document describing a Dataset Series</li>
+    <li> Dataset (<code>dcat:Dataset</code>) - A collection of data related to a common Aeronautical feature</li>
+    <li> Data File (<code>dcat:Distribution</code>) - A specific data file representation of a Dataset</li>
+   <li> Data Service (<code>dcat:DataService</code>) - A digital interface that provides access to a Dataset</li>
+</ul>
+</p>
+<p>
+This Profile includes the following conformance rules:
+<ul>
+  <li>The Data Catalog MAY be present</li>
+    <li>A Dataset Series MUST be present</li>
+    <li>A Data Product Specification MUST be present (for each  Dataset Series)</li>
+    <li>A Dataset MUST be present (for each Dataset Series)</li>
+    <li>Either a Data File or a Data Service MUST be present (for each Dataset)
+</ul>
+</p>
+<P>
+  The formal definition of each property is as defined in [[!VOCAB-DCAT-3]] and is the normative reference.
+The following sections describes the additional contextual details for each property used in the above classes
+for  use by Aeronautical datasets.
+</p>
+<div class="issue" data-number="1"></div>
+
+    <p class="note">
+      The examples in the following sections map the type of the above classes to <code>@type</code> in the JSON-LD serialisations
+    </p>
+
+
+    </section>
+
+    <section>
+      <h2>Describing the Data Catalog</h2>
+
+      <section>
+        <h2>Identifier</h2>
+        <table class="def propdef">
+        <tbody>
+          <tr><th>Identifier:</th> <td><code>dct:identifier</code></td></tr>
+          <tr><th>Notes:</th><td>A unique URI of the Catalog. Mapped to <code>@id</code> in JSON-LD serialisations.</td></tr>
+        </tbody></table>
       </section>
       <section>
-        <h2><dfn>doTheFoo()</dfn> method</h2>
-        <p>When called MUST behave as follows:</p>
-        <ol class="algorithm">
-          <li>If <var>thing</var>....</li>
-          <li>Let <var>someProp</var>... of the [[DOM]] spec.</li>
-        </ol>
+        <h2>Title</h2>
+        <table class="def propdef">
+        <tbody>
+          <tr><th>Identifier:</th> <td><code>dct:title</code></td></tr>
+          <tr><th>Notes:</th><td>Title of the Catalog</td></tr>
+        </tbody></table>
+      </section>
+      <section>
+        <h2>Description</h2>
+        <table class="def propdef">
+        <tbody>
+          <tr><th>Identifier:</th> <td><code>dct:description</code></td></tr>
+          <tr><th>Notes:</th><td>Description of the Catalog</td></tr>
+        </tbody></table>
+      </section>
+      <section>
+        <h2>Has Dataset Series</h2>
+        <table class="def propdef">
+        <tbody>
+          <tr><th>Identifier:</th> <td><code>dct:hasPart</code></td></tr>
+          <tr><th>Notes:</th><td>The identifier of a Dataset Series in the Catalog</td></tr>
+        </tbody></table>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <blockquote>
+           <p>The example below describes the Donlon Aeronautical Catalog which contains
+           links to three Dataset Series.</p>
+        </blockquote>
+    <pre id="eg12" class="example hljs json">
+      {
+        "@id": "http://donlon.aero/data-catalogue",
+        "@type": "dcat:Catalog",
+        "dct:title": "Donlon Aeronautical Data Catalogue",
+        "dct:description": "This catalog provides all dataset series...",
+        "dct:haspart": ["http://donlon.aero/series/aip/",
+                        "http://donlon.aero/series/obstacle/",
+                        "http://donlon.aero/series/terrain/"]
+      }
+    </pre>
+      </section>
+
+    </section>
+
+    <section>
+      <h2>Describing the Dataset Series</h2>
+
+      <section>
+        <h2>Identifier</h2>
+        <table class="def propdef">
+        <tbody>
+          <tr><th>Identifier:</th> <td><code>dct:identifier</code></td></tr>
+          <tr><th>Notes:</th><td>A unique URI of the Dataset Series. Mapped to <code>@id</code> in JSON-LD serialisations.</td></tr>
+        </tbody></table>
+      </section>
+      <section>
+        <h2>Title</h2>
+        <table class="def propdef">
+        <tbody>
+          <tr><th>Identifier:</th> <td><code>dct:title</code></td></tr>
+          <tr><th>Notes:</th><td>Title of the Dataset Series</td></tr>
+        </tbody></table>
+      </section>
+      <section>
+        <h2>Description</h2>
+        <table class="def propdef">
+        <tbody>
+          <tr><th>Identifier:</th> <td><code>dct:description</code></td></tr>
+          <tr><th>Notes:</th><td>Description of the Dataset Series</td></tr>
+        </tbody></table>
+      </section>
+      <section id="theme">
+        <h2>Theme</h2>
+        <table class="def propdef">
+        <tbody>
+          <tr><th>Identifier:</th> <td><code>dcat:theme</code></td></tr>
+          <tr><th>Notes:</th><td>The theme/subject area the Dataset Series covers.
+            <p>The current set of URI values are defined below that covers the main themes for datasets in Aviation. Other URI values MAY be used.</p></td></tr>
+        </tbody></table>
+        <div class="advisement">
+<dl>
+  <td><code>http://vocab.icao.aero/AeronauticalInformation</code>
+  </td><dd>Aeronautical information of lasting character essential to air navigation</dd>
+  <td><code>http://vocab.icao.aero/AirportMapping</code></td>
+  <dd>Collection of aerodrome mapping data organized and arranged as structured data</dd>
+  <td><code>http://vocab.icao.aero/InstrumentFlightProcedure</code></td>
+  <dd>A series of predetermined flight manoeuvres by reference to flight instruments</dd>
+  <td><code>http://vocab.icao.aero/Obstacle</code></td>
+  <dd>All fixed and mobile objects that have been assessed as being a hazard to air navigation</dd>
+  <td><code>http://vocab.icao.aero/Terrain</code></td>
+  <dd>The surface of the Earth containing naturally occurring features</dd>
+</dl>
+          </div>
+      </section>
+      <section id="policy">
+        <h2>Policy</h2>
+        <table class="def propdef">
+        <tbody>
+          <tr><th>Identifier:</th> <td><code>odrl:hasPolicy</code></td></tr>
+          <tr><th>Notes:</th><td>Defines specific usage rules applicable to all the Datasets in the Dataset Series. This property uses the W3C ODRL Policy language [[ODRL-MODEL]] to describe the usage policy. ODRL supports the ability to define <code>actions</code> that are permitted or prohibited. In addition, obligations can also be defined.
+          <p>There is only one use case identified for Aviation datasets that is the use of the dataset(s) is for <i>non-operational</i> purposes only. This can be expressed as a prohibition of the (positive) action of <i>operational use</i>. The URI required to meet this use case is defined below.</p></td></tr>
+        </tbody></table>
+        <div class="advisement">
+          <dl>
+            <td><code>http://vocab.icao.aero/OperationalUse</code>
+            </td><dd>To use a dataset for operational purposes</dd>
+          </dl>
+      </div>
+
+<div class="issue" data-number="2"></div>
+
+      </section>
+      <section id="spatial">
+        <h2>Spatial</h2>
+        <table class="def propdef">
+        <tbody>
+          <tr><th>Identifier:</th> <td><code>dct:spatial</code></td></tr>
+          <tr><th>Notes:</th><td>The spatial area the Dataset Series covers. <p>There are three types of spatial locations supported:
+           <ul>
+            <li>State - The name and ICAO code for the State. Also MAY include the name of the territory/jurisdiction within the State.</li>
+            <li>Aerodrome - The name and the ICAO or IATA code for the aerodrome</li>
+            <li>Airspace - The name, designator code, and category of the airspace.</li>
+           </ul> </p>
+           <p>Each of the above spatial types will define a type URI (which will be equivalent to <code>dct:Location</code>) as well as the set of properties to describe the location. These type URIs are defined below.</p>
+           <p>The properties to describe the State location are:
+             <ul>
+               <li><code>vcard:country-name</code> for text-based country name or <code>vcard:hasCountryName</code> for a URI identifying the country.</li>
+               <li><code>vcard:region</code> for text-based territory/jurisdiction name or <code>vcard:hasRegion</code> for a URI identifying the territory/jurisdiction.</li>
+               <li><code>sdo:termCode</code> for the ICAO code of the State</li>
+             </ul>
+           </p>
+           <p>
+            The properties to describe the Aerodrome location are:
+            <ul>
+              <li><code>sdo:name</code> for the name of the aerodrome</li>
+              <li><code>sdo:icaoCode</code> for the ICAO code identifying the aerodrome</li>
+              <li><code>sdo:iataCode</code> for the IATA code identifying the aerodrome</li>
+            </ul>
+          </p>
+          <p>
+            The properties to describe the Airspace location are:
+            <ul>
+              <li><code>sdo:name</code> for the name of the airspace</li>
+              <li><code>sdo:codeValue</code> for the designator code identifying the airspace</li>
+              <li><code>sdo:termCode</code> for the category of airspace</li>
+            </ul>
+          </p>
+          </td></tr>
+        </tbody></table>
+        <div class="advisement">
+          <dl>
+            <td><code>http://vocab.icao.aero/State</code>
+            </td><dd>An internationally recognised geographic entity that provides aeronautical information service </dd>
+            <td><code>http://vocab.icao.aero/Aerodrome</code>
+            </td><dd>A defined area on land or water intended to be used either wholly or in part for the arrival, departure and surface movement of aircraft</dd>
+            <td><code>http://vocab.icao.aero/Airspace</code>
+            </td><dd>A defined three dimensional region of space relevant to air traffic</dd>
+          </dl>
+                    </div>
+
+<div class="issue" data-number="3"></div>
+<div class="issue" data-number="4"></div>
+<div class="issue" data-number="5"></div>
+
+      </section>
+
+      <section>
+        <h2>Part of Catalog</h2>
+        <table class="def propdef">
+        <tbody>
+          <tr><th>Identifier:</th> <td><code>dct:isPartOf</code></td></tr>
+          <tr><th>Notes:</th><td>The identifier of a Catalog that this Dataset Series is a part of</td></tr>
+        </tbody></table>
+      </section>
+      <section>
+        <h2>Has Dataset</h2>
+        <table class="def propdef">
+        <tbody>
+          <tr><th>Identifier:</th> <td><code>dcat:dataset</code></td></tr>
+          <tr><th>Notes:</th><td>The identifier of a Dataset in this  Dataset Series</td></tr>
+        </tbody></table>
+      </section>
+      <section>
+        <h2>Referenced By</h2>
+        <table class="def propdef">
+        <tbody>
+          <tr><th>Identifier:</th> <td><code>dct:isReferencedBy</code></td></tr>
+          <tr><th>Notes:</th><td>The identifier of the Data Product Specification description that covers this Dataset Series</td></tr>
+        </tbody></table>
+      </section>
+
+
+      <section>
+        <h2>Example</h2>
+        <blockquote>
+           <p>The example below describes the Aeronautical Information Package (AIP) Dataset Series in the Donlon Catalogue. The <code>hasPolicy</code> permits <i>operational use</i>. If the opposite was required, then the <code>odrl:Permission</code> should be changed to <code>odrl:Prohibition</code>. For demonstrable purposes, the example includes all three spatial location types. Only one type would appear in real instances. The example links to four explicit datasets in this series. </i></p>
+        </blockquote>
+    <pre id="eg12" class="example hljs json">
+    {
+      "@id": "http://donlon.aero/series/aip",
+      "@type": "dcat:DatasetSeries",
+      "dct:title": "Donlon AIP Series",
+      "dct:description": "AIP datasets for Donlon ...",
+      "dcat:theme": "http://vocab.icao.aero/AeronauticalInformation",
+      "odrl:hasPolicy": {
+        "@type": "odrl:Permission",
+        "odrl:action": "http://vocab.icao.aero/OperationalUse" },
+      // Example State spatial location
+      "dct:spatial": {
+          "@type": "http://vocab.icao.aero/State",
+          "vcard:country-name": "Republic of Donlon",
+          "vcard:region": "South Donlon",
+          "sdo:termCode": "DDDD" },
+      // Example Aerodrome spatial location
+      "dct:spatial": {
+          "@type": "http://vocab.icao.aero/Aerodrome",
+          "sdo:name": "Donlon International Airport",
+          "sdo:icaoCode": "ZZZZ",
+          "sdo:iataCode": "ZZZ" },
+      // Example Airspace spatial location
+      "dct:spatial": {
+          "@type": "http://vocab.icao.aero/Airspace",
+          "sdo:name": "AMSWELL",
+          "sdo:codeValue": "EAAD",
+          "sdo:termCode": "FIR" },
+      "dct:isPartOf": "http://donlon.aero/data-catalogue",
+      "dct:dataset": ["http://donlon.aero/series/aip/2021/Jan",
+                      "http://donlon.aero/series/aip/2021/Feb",
+                      "http://donlon.aero/series/aip/2021/Mar",
+                      "http://donlon.aero/series/aip/2021/Apr"],
+      "dct:isReferencedBy": "http://donlon.aero/product/aip-series"
+    }
+    </pre>
       </section>
     </section>
-    <section id='conformance'>
-      <!-- This section is filled automatically by ReSpec. -->
-    </section>
+
+      <section>
+        <h2>Describing the Dataset</h2>
+  
+        <section>
+          <h2>Identifier</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>dct:identifier</code></td></tr>
+            <tr><th>Notes:</th><td>A unique URI of the Dataset. Mapped to <code>@id</code> in JSON-LD serialisations.</td></tr>
+          </tbody></table>
+        </section>
+        <section>
+          <h2>Title</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>dct:title</code></td></tr>
+            <tr><th>Notes:</th><td>Title of the Dataset</td></tr>
+          </tbody></table>
+        </section>
+        <section>
+          <h2>Description</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>dct:description</code></td></tr>
+            <tr><th>Notes:</th><td>Description of the Dataset</td></tr>
+          </tbody></table>
+        </section>
+      <section>
+          <h2>Type</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>dct:type</code></td></tr>
+            <tr><th>Notes:</th><td>The release type of the Dataset.
+              <p>The current set of URI values are defined below for the types of dataset releases. Other URI values MAY be used.</p></td></tr>
+          </tbody></table>
+          <div class="advisement">
+  <dl>
+    <td><code>http://vocab.icao.aero/Dataset/Baseline</code>
+    </td><dd>The dataset includes all features</dd>
+    <td><code>http://vocab.icao.aero/Dataset/Snapshot</code></td>
+    <dd>The dataset includes all features at a specified time instance </dd>
+    <td><code>http://vocab.icao.aero/Dataset/DeltaPerm</code></td>
+    <dd>The dataset includes all feature permanent differences</dd>
+    <td><code>http://vocab.icao.aero/Dataset/DeltaTemp</code></td>
+    <dd>The dataset includes all feature temporary differences</dd>
+  </dl>
+            </div>
+        </section>
+
+        <section>
+          <h2>Theme</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>dcat:theme</code></td></tr>
+            <tr><th>Notes:</th><td>The theme/subject area the Dataset Series covers.  Note that the Dataset theme MUST not conflict with any theme defined for the parent Dataset Series.
+              <p>The current set of URI values are defined in Section <a href="#theme">4.4 Theme</a>. Other URI values MAY be used.</p></td></tr>
+          </tbody></table>
+        </section>
+
+        <section>
+          <h2>Method</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>dct:accrualMethod</code></td></tr>
+            <tr><th>Notes:</th><td>The methodology used for items added to the dataset. Used to indicate if the dataset was published as part of the AIRAC (Aeronautical Information Regulation And Control) cycle.
+              <p>The current set of URI values are defined below for the types of dataset releases. Other URI values MAY be used.</p></td></tr>
+          </tbody></table>
+          <div class="advisement">
+  <dl>
+    <td><code>http://vocab.icao.aero/Dataset/AIRAC</code>
+    </td><dd>The dataset is published under the AIRAC cycle</dd>
+  </dl>
+            </div>
+        </section>
+        <section>
+          <h2>Conformance</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>dct:conformsTo</code></td></tr>
+            <tr><th>Notes:</th><td>The technical encoding/serialisation of the dataset contents.
+              <p>The current set of URI values are defined below for technical conformance. Other URI values MAY be used.</p></td></tr>
+          </tbody></table>
+          <div class="advisement">
+  <dl>
+    <td><code>http://vocab.icao.aero/AIXM</code>
+    </td><dd>The dataset conforms to the AIXM specification</dd>
+    <td><code>http://vocab.icao.aero/FIXM</code>
+    </td><dd>he dataset conforms to the FIXM specification</dd>
+       <td><code>http://vocab.icao.aero/IWXXM</code>
+    </td><dd>The dataset conforms to the IWXXM specification</dd>
+       <td><code>http://vocab.icao.aero/AMXM</code>
+    </td><dd>The dataset conforms to the AMXM specification</dd>
+  </dl>
+  </div>
+
+  <div class="issue" data-number="6"></div>
+
+ 
+        </section>
+      
+
+
+        <section>
+          <h2>Policy</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>odrl:hasPolicy</code></td></tr>
+            <tr><th>Notes:</th><td>Defines specific usage rules applicable to  the Dataset. Note that the Dataset rules MUST not conflict with any policy defined for the parent Dataset Series.
+              <p> See Section <a href="#policy">4.5 Policy</a> for more details.</p>
+            </td></tr>
+          </tbody></table>
+        </section>
+
+        <section>
+          <h2>Issued</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>dct:issued</code></td></tr>
+            <tr><th>Notes:</th><td>The date of issue of the Dataset. MAY include the time in the date.
+            </td></tr>
+          </tbody></table>
+        </section>  
+
+        <section>
+          <h2>Temporal</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>dct:temporal</code></td></tr>
+            <tr><th>Notes:</th><td>The effective dates related to Dataset. MUST include at least one of <code>dct:startDate</code> or <code>dct:endDate</code>. MAY includes the times in the dates.
+            </td></tr>
+          </tbody></table>
+        </section>
+
+        <section>
+          <h2>Spatial</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>dct:spatial</code></td></tr>
+            <tr><th>Notes:</th><td>The spatial area the Dataset covers.  Note that the Dataset spatial location MUST not conflict with any spatial location defined for the parent Dataset Series.
+              <p> See Section <a href="#spatial">4.6 Spatial</a> for more details.</p>
+            </td></tr>
+          </tbody></table>
+        </section>
+  
+        <section>
+          <h2>Part of Dataset Series</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>dct:isPartOf</code></td></tr>
+            <tr><th>Notes:</th><td>The identifier of a Dataset Series that this Dataset is a part of</td></tr>
+          </tbody></table>
+        </section>
+        <section>
+          <h2>Has Distribution</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>dcat:distribution</code></td></tr>
+            <tr><th>Notes:</th><td>The identifier of the distribution describing how to download the dataset file</td></tr>
+          </tbody></table>
+        </section>
+        <section>
+          <h2>Has Service</h2>
+          <table class="def propdef">
+          <tbody>
+            <tr><th>Identifier:</th> <td><code>dcat:service</code></td></tr>
+            <tr><th>Notes:</th><td>The identifier of the data service describing how to access the dataset file</td></tr>
+          </tbody></table>
+        </section>
+  
+  
+        <section id="dataset-ex">
+          <h2>Example</h2>
+          <blockquote>
+             <p>The example below describes the Aeronautical Information Package (AIP) Dataset for April 2021. The example includes links to both a file distribution and a data service to access the dataset (see the following sections for description of their properties). </i></p>
+          </blockquote>
+      <pre id="eg12" class="example hljs json">
+      {
+        "@id": "http://donlon.aero/series/aip/2021/Apr",
+        "@type": "dcat:Dataset",
+        "dct:title": "Donlon AIP Dataset April 2021",
+        "dct:description": "AIP dataset for Donlon ...",
+        "dct:type": "http://vocab.icao.aero/Dataset/Baseline",
+        "dcat:theme": "http://vocab.icao.aero/AeronauticalInformation",
+        "dct:accuralMethod": "http://vocab.icao.aero/Dataset/AIRAC",
+        "dct:conformsTo": "http://vocab.icao.aero/AIXM",
+        "dct:issued": "2021-03-25",
+        "dct:temporal": {
+           "@type": "dct:PeriodOfTime", 
+           "dct:startDate": "2021-04-01", 
+           "dct:endDate": "2021-04-30" },
+        "dct:spatial": {
+           "@type": "http://vocab.icao.aero/State",
+           "vcard:country-name": "Republic of Donlon",
+           "sdo:termCode": "DDDD" },
+        "dct:isPartOf": "http://donlon.aero/series/aip",
+        "dcat:distribution": {
+           "@type": "dcat:Distribution",
+           "dcat:downloadURL": "http://donlon.aero/series/aerodrome/2021/Jan/data.xml", 
+           "dcat:mediaType": "https://www.iana.org/assignments/media-types/application/gml+xml",
+           "dcat:byteSize": "34254" },
+        "dcat:service": {
+           "@type": "dcat:DataService",
+           "dcat:endpointURL": "http://donlon.aero/data-api/aip/",
+           "dcat:compressFormat": "https://www.iana.org/assignments/media-types/application/gzip" }
+      }
+      </pre>
+  </section>
+
+</section>
+
+
+<section>
+  <h2>Describing the Data File Distribution</h2>
+
+  <section>
+    <h2>Access</h2>
+    <table class="def propdef">
+    <tbody>
+      <tr><th>Identifier:</th> <td><code>dcat:downloadURL</code></td></tr>
+      <tr><th>Notes:</th><td>The URI to directly download the dataset file</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>Media Type</h2>
+    <table class="def propdef">
+    <tbody>
+      <tr><th>Identifier:</th> <td><code>dcat:mediaType</code></td></tr>
+      <tr><th>Notes:</th><td>The media type of the file distribution. This property SHOULD use media types defined by IANA [[IANA-MEDIA-TYPES]]</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>Media Size</h2>
+    <table class="def propdef">
+    <tbody>
+      <tr><th>Identifier:</th> <td><code>dcat:byteSize</code></td></tr>
+      <tr><th>Notes:</th><td>The size of the distribution in bytes</td></tr>
+    </tbody></table>
+  </section>
+</section>
+
+<section>
+  <h2>Describing the Data Service</h2>
+
+  <section>
+    <h2>Endpoint</h2>
+    <table class="def propdef">
+    <tbody>
+      <tr><th>Identifier:</th> <td><code>dcat:endpointURL</code></td></tr>
+      <tr><th>Notes:</th><td>The primary endpoint URI of the data service</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>Package Format</h2>
+    <table class="def propdef">
+    <tbody>
+      <tr><th>Identifier:</th> <td><code>dcat:packageFormat</code></td></tr>
+      <tr><th>Notes:</th><td>The package format of the dataset in which one or more data files are grouped together. The format SHOULD be expressed using a media type as defined by IANA [[IANA-MEDIA-TYPES]]</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>Compression Format</h2>
+    <table class="def propdef">
+    <tbody>
+      <tr><th>Identifier:</th> <td><code>dcat:compressFormat</code></td></tr>
+      <tr><th>Notes:</th><td>The compression format of the dataset in which the data is contained in a compressed form. The format SHOULD be expressed using a media type as defined by IANA [[IANA-MEDIA-TYPES]]</td></tr>
+    </tbody></table>
+  </section>
+
+  </section>
+
+<section>
+  <h2>Describing the Data Product Specification</h2>
+
+  <section>
+    <h2>Identifier</h2>
+    <table class="def propdef">
+    <tbody>
+      <tr><th>Identifier:</th> <td><code>dct:identifier</code></td></tr>
+      <tr><th>Notes:</th><td>A unique URI of the Data Product Specification description. Mapped to <code>@id</code> in JSON-LD serialisations.</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>Title</h2>
+    <table class="def propdef">
+    <tbody>
+      <tr><th>Identifier:</th> <td><code>dct:title</code></td></tr>
+      <tr><th>Notes:</th><td>The title of the Data Product Specification.</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>Document Type</h2>
+    <table class="def propdef">
+    <tbody>
+      <tr><th>Identifier:</th> <td><code>dct:type</code></td></tr>
+      <tr><th>Notes:</th><td>The type of document. This property is used to assert that the resource is a Data Product Specification. The URI is defined below.</td></tr>
+    </tbody></table>
+  <div class="advisement">
+<dl>
+<td><code>http://vocab.icao.aero/DataProductSpecification</code>
+</td><dd>The resource is of type Data Product Specification</dd>
+</dl>
+    </div>
+  </section>
+
+  <section>
+    <h2>References</h2>
+    <table class="def propdef">
+    <tbody>
+      <tr><th>Identifier:</th> <td><code>dct:references</code></td></tr>
+      <tr><th>Notes:</th><td>The identifier of the Dataset Series this Data Product Description covers</td></tr>
+    </tbody></table>
+  </section>
+  <section>
+    <h2>Has distribution</h2>
+    <table class="def propdef">
+    <tbody>
+      <tr><th>Identifier:</th> <td><code>dcat:distribution</code></td></tr>
+      <tr><th>Notes:</th><td>The identifier of the distribution describing how to access the document.</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>Example</h2>
+    <blockquote>
+       <p>The example below describes a Data Product Description for the Donlon AIP Dataset Series</p>
+    </blockquote>
+<pre id="eg12" class="example hljs json">
+  {
+    "@id": "http://donlon.aero/product/aip-series",
+    "@type": "dcat:Resource",
+    "dct:title": "Donlon AIP Dataset Series Product Description",
+    "dct:type": "http://vocab.icao.aero/DataProductSpecification",
+    "dct:references": "http://donlon.aero/series/aip",
+    "dcat:distribution": {
+      "@type": "dcat:Distribution",
+      "dcat:downloadURL": "http://donlon.aero/dps/aip.pdf", 
+      "dcat:mediaType": "https://www.iana.org/assignments/media-types/application/pdf" }
+  }
+</pre>
+  </section>
+</section>
+
+
+
+
+
   </body>
 </html>
