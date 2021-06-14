@@ -35,8 +35,15 @@
                       status: "Draft",
                       date: "2021",
                       href: "TBA"
+                  },
+              "GEOCAT2": {
+                      title: "GeoDCAT Application Profile",
+                      publisher: "European Commission Joint Research Centre",
+                      status: "Recommendation",
+                      date: "23 December 2020",
+                      href: "https://semiceu.github.io/GeoDCAT-AP/releases/2.0.0/"
                   }
-              },
+                },
       };
     </script>
   </head>
@@ -45,15 +52,19 @@
     <h1 id="title">W3C DCAT Profile for ICAO Aeronautical Datasets</h1>
     <section id='abstract'>
       <p>
-        This specification defines a Profile of the W3C Data Catalog Vocabulary
-         specifically for the use of describing Aeronautical datasets in the Aviation industry.
-      </p>
+        This specification defines a Profile of the W3C Data Catalog (DCAT) Vocabulary
+        specifically for the use of describing Aeronautical datasets in the aviation industry. This DCAT Profile specification is a technical appendium to the ICAO Aeronautical Information Management (AIM)
+          Manual Volume IV on Digital Data Sets. This manual provides the specific guidance for the provision of digital data sets that are  managed and published by aeronautical data service providers. </p>
+        <p>
+          The W3C DCAT recommendation enables a publisher to describe datasets and data services in a catalog using a standard model and vocabulary that facilitates the consumption and aggregation of metadata from multiple catalogs. This can increase the discoverability of datasets and data services. It also makes it possible to have a decentralized approach to publishing data catalogs and makes federated search for datasets across catalogs in multiple sites possible using the same query mechanism and structure. 
+        </p>
+  
+
     </section>
     <section id="sotd" class="override">
     <h2>Status of this document</h2>
     <p>The current version is DRAFT. Feedback and comments welcome via the Github Issue feature. </p>
-    <p>This specification is a technical appendium to the ICAO Aeronautical Information Management (AIM)
-      Manual Volume IV on Digital Data Sets.</p>
+    
       <p>This specification is governed by the ICAO Information Management Panel AIM Working Group.</p>
 
     <p class="note">
@@ -149,15 +160,28 @@
     <code>http://vocab.icao.aero</code></p>
   <p>The URIs based on this address will not be resolvable until a future time.
     </p>
+    <blockquote>Where applicable, references will be made to existing online vocabularies with the same semantics.</blockquote>
   </div>
 </section>
+
+<section class="informative">
+  <h2>ISO 19115 Mapping</h2>
+  <p>  
+    A mapping currently exists between W3C DCAT and the Geographic Metadata ISO 19115 [[ISO-19115]] standard. The GeoDCAT Application Profile [[GEOCAT2]] provides the details in Appendix B of that document. Aeronautical data providers MAY require this conformance requirement.
+   
+  </p>
+</section>
+
+
+
+
 
     </section>
 
         </section>
 
     <section>
-      <h2>Profile Model</h2>
+      <h2>Aeronautical Profile Model</h2>
   <p>The ICAO Aeronautical Information Management (AIM)
     Manual Volume IV on Digital Data Sets [[AIMV4]] defines the requirements for publishing digital data sets. This Profile defines how to implement these requirements as a Profile of the W3C DCAT specification [[VOCAB-DCAT-3]]
     The Aeronautical Dataset Profile model is shown in Figure 1.
@@ -308,8 +332,9 @@ for  use by Aeronautical datasets.
   <dd>A series of predetermined flight manoeuvres by reference to flight instruments</dd>
   <td><code>http://vocab.icao.aero/Obstacle</code></td>
   <dd>All fixed and mobile objects that have been assessed as being a hazard to air navigation</dd>
-  <td><code>http://vocab.icao.aero/Terrain</code></td>
-  <dd>The surface of the Earth containing naturally occurring features</dd>
+  <td><code>http://vocab.icao.aero/Terrain</code> </td>
+  <dd>The surface of the Earth containing naturally occurring features
+  <blockquote>Same As: </i><a href="https://schema.org/Landform">https://schema.org/Landform</a></blockquote></dd>
 </dl>
           </div>
       </section>
@@ -324,7 +349,7 @@ for  use by Aeronautical datasets.
         <div class="advisement">
           <dl>
             <td><code>http://vocab.icao.aero/OperationalUse</code>
-            </td><dd>To use a dataset for operational purposes</dd>
+            </td><dd>Intended to be used as the basis for operational decision making</dd>
           </dl>
       </div>
 
@@ -371,9 +396,13 @@ for  use by Aeronautical datasets.
         <div class="advisement">
           <dl>
             <td><code>http://vocab.icao.aero/State</code>
-            </td><dd>An internationally recognised geographic entity that provides aeronautical information service </dd>
+            </td><dd>An internationally recognised geographic entity that provides aeronautical information service 
+              <blockquote>Same As: </i><a href="https://schema.org/Landform">https://schema.org/AdministrativeArea</a></blockquote>
+            </dd>
             <td><code>http://vocab.icao.aero/Aerodrome</code>
-            </td><dd>A defined area on land or water intended to be used either wholly or in part for the arrival, departure and surface movement of aircraft</dd>
+            </td><dd>A defined area on land or water intended to be used either wholly or in part for the arrival, departure and surface movement of aircraft
+              <blockquote>Same As: </i><a href="https://schema.org/Landform">https://schema.org/Airport</a></blockquote>
+            </dd>
             <td><code>http://vocab.icao.aero/Airspace</code>
             </td><dd>A defined three dimensional region of space relevant to air traffic</dd>
           </dl>
@@ -805,7 +834,10 @@ for  use by Aeronautical datasets.
 
 
 
-
+<section class="appendix">
+  <h2>Acknowledgements</h2>
+<p>The editors gratefully acknowledge the feedback and contributions made to this document by: Simon Cox (CSIRO), Scott Wilson (EUROCONTROL)</p>
+  </section>
 
   </body>
 </html>
